@@ -1,6 +1,7 @@
 import requests
 from requests.exceptions import RequestException
 import re
+import json
 
 #获取单页
 def get_one_page(url):
@@ -24,11 +25,18 @@ def parse_one_page(html):
             'comments': item[1]
         }
 
+#输出到txt
+def write_to_file(content):
+    with open('result.txt', 'a', encoding='utf-8') as f:
+        f.write(json.dumps(content, ensure_ascii=False) + '\n')
+        f.close()
+
 def main():
     url = 'https://movie.douban.com/top250'
     html = get_one_page(url)
     for item in parse_one_page(html):
         print(item)
+        write_to_file(item)
 
 if __name__ == '__main__':
     main()
