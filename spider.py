@@ -2,6 +2,7 @@ import requests
 from requests.exceptions import RequestException
 import re
 import json
+from multiprocessing import Pool
 
 #获取单页
 def get_one_page(url):
@@ -39,5 +40,6 @@ def main(start):
         write_to_file(item)
 
 if __name__ == '__main__':
-    for i in range(10):
-        main(i*25)
+    #创建进程池，实现秒抓
+    pool = Pool()
+    pool.map(main, [i*25 for i in range(10)])
